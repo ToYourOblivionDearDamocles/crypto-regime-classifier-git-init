@@ -1,25 +1,29 @@
 # Crypto Market Regime Classifier
 
-End-to-end ML production pipeline for crypto volatility and market-regime classification using public OHLCV data.
+This is a work-in-progress machine learning project for classifying crypto market regimes using public OHLCV data.
 
-The project is organized as a production-style workflow:
+The current focus is a binary classifier for BTCUSDT high-volatility periods. The project is still under development, so some modules, reports, and dashboard views may change as the pipeline improves.
 
-- Binance BTCUSDT OHLCV ingestion, validation, and resampling
-- Leakage-safe feature engineering for 5-minute market candles
-- Binary high-volatility labeling and later multiclass regime labeling
-- Time-aware model splitting and walk-forward validation
-- Model training, evaluation, calibration, and registry utilities
-- FastAPI serving, Streamlit exploration, and monitoring reports
+Main components:
+
+- Data ingestion and validation
+- Feature engineering
+- Binary label generation
+- Time-based train/validation/test splitting
+- Model training and evaluation
+- FastAPI serving
+- Streamlit dashboard
+- Basic monitoring reports
 
 ## Project Milestones
 
 ### Milestone 1 — Binary High-Volatility Classifier
 
-Predict whether BTCUSDT enters a high-volatility regime over the next 60 minutes using only information available up to the prediction timestamp.
+Predict whether BTCUSDT enters a high-volatility period over the next 60 minutes.
 
 ### Milestone 2 — Multiclass Market Regime Classifier
 
-Extend the target into four future regimes: normal, upside breakout, downside turbulence, and high-volatility uncertain.
+Planned future extension: classify several market-regime types instead of only high-volatility vs. not high-volatility.
 
 ## Project Layout
 
@@ -45,7 +49,7 @@ pytest
 
 ## Pipeline Step 1 — Data Ingestion
 
-This step downloads BTCUSDT 5-minute OHLCV candles, stores the raw Binance-format data, converts it into the project canonical schema, normalizes timestamps to UTC, and saves the processed candles as Parquet.
+Downloads BTCUSDT 5-minute OHLCV candles and saves raw and processed data.
 
 Run:
 
@@ -55,7 +59,7 @@ python -m crypto_regime.data.download --config configs/data.yaml
 
 ## Teaching Pipeline 2 — Data Validation
 
-This pipeline validates the processed BTCUSDT candles before feature engineering and model training. It checks schema, UTC timestamps, sorted and unique candles, missing intervals, duplicate rows, OHLCV consistency, null values, and extreme one-candle returns.
+Validates the processed candle data before feature engineering.
 
 Run:
 
@@ -65,7 +69,7 @@ python -m crypto_regime.data.validate --config configs/data.yaml
 
 ## Teaching Pipeline 3 — Feature Engineering
 
-This pipeline builds backward-looking OHLCV features for BTCUSDT 5-minute candles. It creates candle-shape, return, volume, realized-volatility, drawdown, and rolling-window features while checking that feature values do not depend on future rows.
+Builds backward-looking candle, return, volume, volatility, and rolling-window features.
 
 Run:
 
@@ -75,7 +79,7 @@ python -m crypto_regime.features.build_features --config configs/features.yaml
 
 ## Teaching Pipeline 5 — Splitting and Validation
 
-This pipeline creates chronological train/validation/test splits with purge gaps around split boundaries.
+Creates chronological train/validation/test splits.
 
 Run:
 
@@ -85,7 +89,7 @@ python -m crypto_regime.splitting.time_split --config configs/splitting.yaml
 
 ## Teaching Pipeline 6 — Modeling
 
-This pipeline trains the first binary classification models using the split-safe target from Teaching pipeline 5.
+Trains binary classification models.
 
 Run:
 
@@ -95,7 +99,7 @@ python -m crypto_regime.models.train --config configs/model.yaml
 
 ## Teaching Pipeline 7 — Evaluation
 
-This pipeline evaluates trained model artifacts using task-aware metrics.
+Evaluates trained model artifacts.
 
 Run:
 
@@ -105,7 +109,7 @@ python -m crypto_regime.evaluation.evaluate --config configs/evaluation.yaml
 
 ## Teaching Pipeline 8 — Serving and Inference
 
-This pipeline serves trained model artifacts through FastAPI and supports offline batch inference.
+Serves trained model artifacts through FastAPI.
 
 Run the API:
 
@@ -115,7 +119,7 @@ uvicorn crypto_regime.api.main:app --reload
 
 ## Teaching Pipeline 9 — Monitoring
 
-This pipeline monitors data freshness, feature drift, and prediction drift.
+Creates basic monitoring outputs for freshness and drift.
 
 Run:
 
@@ -125,7 +129,7 @@ python -m crypto_regime.monitoring.run_monitoring --config configs/monitoring.ya
 
 ## Teaching Pipeline 10 — Dashboard and Communication
 
-This pipeline builds a Streamlit dashboard for communicating the ML system.
+Runs the Streamlit dashboard.
 
 Run:
 
@@ -135,4 +139,4 @@ streamlit run app/streamlit_app.py
 
 ## Current Build
 
-The current build is Milestone 1. The pipeline starts with data ingestion, then adds validation, feature engineering, leakage-safe binary labels, time-based evaluation, calibration, FastAPI serving, Docker packaging, and Streamlit dashboards.
+This project is still under development. The current build supports the Milestone 1 binary high-volatility workflow. The multiclass regime workflow and some production polish are planned but not complete yet.
