@@ -1,0 +1,11 @@
+api:
+  title: Crypto Regime Classifier API
+  version: 0.1.0
+
+model:
+  registry_dir: models/saved
+  default_model: latest.joblib
+
+prediction:
+  return_probabilities: true
+  max_batch_size: 500

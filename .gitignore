@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Environments
+.env
+.venv/
+venv/
+
+# Notebooks and OS files
+.ipynb_checkpoints/
+.DS_Store
+
+# Local artifacts
+data/raw/*
+data/interim/*
+data/processed/*
+models/saved/*
+reports/figures/*
+reports/evaluation/*
+reports/monitoring/*
+runs/*
+
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+!models/saved/.gitkeep
+!reports/figures/.gitkeep
+!reports/evaluation/.gitkeep
+!reports/monitoring/.gitkeep

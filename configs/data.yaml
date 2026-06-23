@@ -1,0 +1,18 @@
+symbol: BTCUSDT
+interval: 5m
+
+# Start small for the first committed version.
+# Later you can expand this to 12 months after the pipeline is stable.
+start_utc: "2025-01-01 00:00:00"
+end_utc: "2025-02-01 00:00:00"
+
+raw_dir: data/raw
+processed_dir: data/processed
+
+# Primary historical source.
+binance_public_data_base_url: "https://data.binance.vision"
+
+# Backup REST source.
+binance_rest_base_url: "https://api.binance.com"
+
+use_rest_backup: true

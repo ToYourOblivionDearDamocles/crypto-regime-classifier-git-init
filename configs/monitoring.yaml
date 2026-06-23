@@ -1,0 +1,54 @@
+monitoring_version: crypto_monitoring_v1
+symbol: BTCUSDT
+interval: 5m
+
+output_dir: reports/monitoring
+monitoring_summary_path: reports/monitoring/monitoring_summary.json
+monitoring_report_path: reports/monitoring/monitoring_report.md
+
+feature_schema_path: reports/feature_schema.json
+
+freshness:
+  enabled: true
+  data_path: data/processed/BTCUSDT_5m_2025-01-01_2025-02-01_processed.parquet
+  timestamp_column: timestamp
+  symbol_column: symbol
+  mode: historical       # "historical" or "live"
+  expected_interval: 5m
+  max_allowed_delay_minutes: 15
+  reference_time_utc: null
+
+feature_drift:
+  enabled: true
+
+  # Reference should usually be split == train.
+  reference_data_path: data/interim/BTCUSDT_5m_2025-01-01_2025-02-01_labeled_binary_splits.parquet
+  reference_split_column: split
+  reference_split_values:
+    - train
+
+  # Current can be validation/test for project demo, or recent production features later.
+  current_data_path: data/interim/BTCUSDT_5m_2025-01-01_2025-02-01_labeled_binary_splits.parquet
+  current_split_column: split
+  current_split_values:
+    - validation
+    - test
+
+  psi_bins: 10
+  psi_warning_threshold: 0.10
+  psi_alert_threshold: 0.25
+  max_features_in_report: 50
+
+prediction_drift:
+  enabled: true
+
+  # Example paths from Teaching pipeline 7.
+  # You may change model name if you evaluate a different trained model.
+  reference_prediction_path: reports/evaluation/crypto_binary_v1/predictions/logistic_regression/validation_predictions.parquet
+  current_prediction_path: reports/evaluation/crypto_binary_v1/predictions/logistic_regression/test_predictions.parquet
+
+  score_column: y_score
+  decision_threshold: 0.50
+  psi_bins: 10
+  psi_warning_threshold: 0.10
+  psi_alert_threshold: 0.25

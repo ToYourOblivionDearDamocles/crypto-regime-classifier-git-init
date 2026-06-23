@@ -1,0 +1,36 @@
+dashboard_title: Crypto Market Regime Classifier
+project_name: crypto-regime-classifier
+model_version: crypto_binary_v1
+task_type: binary_classification
+
+symbol: BTCUSDT
+interval: 5m
+
+paths:
+  split_data_path: data/interim/BTCUSDT_5m_2025-01-01_2025-02-01_labeled_binary_splits.parquet
+  evaluation_metrics_table_path: reports/evaluation/crypto_binary_v1/metrics_table.csv
+  monitoring_summary_path: reports/monitoring/monitoring_summary.json
+  monitoring_report_path: reports/monitoring/monitoring_report.md
+  feature_schema_path: reports/feature_schema.json
+  label_config_path: reports/label_binary_config.json
+  split_manifest_path: reports/split_manifest.json
+  training_summary_path: models/saved/crypto_binary_v1/training_summary.json
+
+  # Choose one model prediction file for timeline visualization.
+  prediction_path: reports/evaluation/crypto_binary_v1/predictions/logistic_regression/test_predictions.parquet
+
+columns:
+  timestamp: timestamp
+  symbol: symbol
+  close: close
+  split: split
+  target: y_high_vol_12_split_safe
+  future_rv: future_rv_12
+  prediction_score: y_score
+  prediction_class: y_pred_at_0_5
+
+api:
+  base_url: http://127.0.0.1:8000
+  health_endpoint: /health
+  model_info_endpoint: /model-info
+  predict_endpoint: /predict

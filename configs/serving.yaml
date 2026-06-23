@@ -1,0 +1,24 @@
+task_type: binary_classification
+model_version: crypto_binary_v1
+
+model_artifact_dir: models/saved/crypto_binary_v1
+default_model_name: logistic_regression
+
+# Prefer the model-specific schema saved during training.
+fallback_feature_schema_path: reports/feature_schema.json
+
+rolling_windows:
+  - 3
+  - 6
+  - 12
+  - 48
+  - 288
+
+min_periods_policy: full_window
+
+positive_label: 1
+decision_threshold: 0.50
+
+api:
+  title: Crypto Regime Classifier API
+  version: 0.1.0

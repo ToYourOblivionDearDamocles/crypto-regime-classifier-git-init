@@ -1,0 +1,30 @@
+task_type: binary_classification
+model_version: crypto_binary_v1
+
+split_input_path: data/interim/BTCUSDT_5m_2025-01-01_2025-02-01_labeled_binary_splits.parquet
+feature_schema_path: reports/feature_schema.json
+model_artifact_dir: models/saved/crypto_binary_v1
+
+evaluation_output_dir: reports/evaluation/crypto_binary_v1
+prediction_output_dir: reports/evaluation/crypto_binary_v1/predictions
+evaluation_report_path: reports/evaluation/crypto_binary_v1/evaluation_report.md
+evaluation_summary_path: reports/evaluation/crypto_binary_v1/evaluation_summary.json
+
+target_column: y_high_vol_12_split_safe
+split_column: split
+
+evaluation_splits:
+  - validation
+  - test
+
+positive_label: 1
+
+thresholds:
+  - 0.50
+
+top_k_fractions:
+  - 0.05
+  - 0.10
+
+# Use "discover" to evaluate every trained model directory under model_artifact_dir.
+models: discover

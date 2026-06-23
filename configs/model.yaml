@@ -1,0 +1,47 @@
+task_type: binary_classification
+model_version: crypto_binary_v1
+
+split_input_path: data/interim/BTCUSDT_5m_2025-01-01_2025-02-01_labeled_binary_splits.parquet
+feature_schema_path: reports/feature_schema.json
+
+target_column: y_high_vol_12_split_safe
+split_column: split
+
+model_artifact_dir: models/saved/crypto_binary_v1
+training_report_path: reports/model_training_report.md
+
+model_splits:
+  train: train
+  validation: validation
+  test: test
+
+exclude_splits:
+  - purge_train_validation
+  - purge_validation_test
+
+models:
+  - name: majority_baseline
+    backend: sklearn
+    estimator: dummy_classifier
+    preprocessing: none
+    params:
+      strategy: most_frequent
+
+  - name: logistic_regression
+    backend: sklearn
+    estimator: logistic_regression
+    preprocessing: standard_scaler
+    params:
+      max_iter: 1000
+      class_weight: balanced
+      solver: lbfgs
+
+  - name: hist_gradient_boosting
+    backend: sklearn
+    estimator: hist_gradient_boosting_classifier
+    preprocessing: none
+    params:
+      max_iter: 200
+      learning_rate: 0.05
+      max_leaf_nodes: 31
+      random_state: 42

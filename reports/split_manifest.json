@@ -1,0 +1,22 @@
+{
+  "symbol": "BTCUSDT",
+  "interval": "5m",
+  "labeled_input_path": "data/interim/BTCUSDT_5m_2025-01-01_2025-02-01_labeled_binary.parquet",
+  "split_output_path": "data/interim/BTCUSDT_5m_2025-01-01_2025-02-01_labeled_binary_splits.parquet",
+  "target_column": "y_high_vol_12_split_safe",
+  "future_rv_column": "future_rv_12",
+  "train_fraction": 0.7,
+  "validation_fraction": 0.15,
+  "test_fraction": 0.15,
+  "horizon_candles": 12,
+  "purge_gap_candles": 12,
+  "volatility_quantile": 0.8,
+  "split_safe_volatility_threshold": 0.006680095405165883,
+  "split_counts": {
+    "train": 6027,
+    "test": 1295,
+    "validation": 1282,
+    "purge_train_validation": 12,
+    "purge_validation_test": 12
+  }
+}

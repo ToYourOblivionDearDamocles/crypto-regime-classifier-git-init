@@ -1,0 +1,44 @@
+{
+  "symbol": "BTCUSDT",
+  "interval": "5m",
+  "features_input_path": "data/interim/BTCUSDT_5m_2025-01-01_2025-02-01_features.parquet",
+  "labeled_output_path": "data/interim/BTCUSDT_5m_2025-01-01_2025-02-01_labeled_binary.parquet",
+  "label_type": "binary_high_volatility",
+  "horizon_candles": 12,
+  "horizon_minutes": 60,
+  "future_return_column": "future_return_12",
+  "future_rv_column": "future_rv_12",
+  "label_column": "y_high_vol_12",
+  "future_rv_definition": "sqrt(sum_{i=1}^{horizon} r_{t+i}^2), where r_t = log(close_t) - log(close_{t-1})",
+  "volatility_quantile": 0.8,
+  "volatility_threshold": 0.006677282643354623,
+  "threshold_source": "chronological threshold-training portion only; not computed from the full dataset",
+  "train_fraction_for_threshold": 0.7,
+  "summary": {
+    "horizon": 12,
+    "total_rows_before_label_drop": 8640,
+    "valid_labeled_rows": 8628,
+    "missing_label_rows": 12,
+    "volatility_threshold": 0.006677282643354623,
+    "overall_class_counts": {
+      "0": 6946,
+      "1": 1682
+    },
+    "overall_class_rates": {
+      "0": 0.8050533147890588,
+      "1": 0.19494668521094113
+    },
+    "threshold_train_class_counts": {
+      "0": 4831,
+      "1": 1208
+    },
+    "threshold_train_class_rates": {
+      "0": 0.799966881934095,
+      "1": 0.20003311806590496
+    },
+    "future_rv_min": 0.0007673065738977039,
+    "future_rv_median": 0.003860900649108866,
+    "future_rv_mean": 0.004871017688529035,
+    "future_rv_max": 0.047084491037938984
+  }
+}

@@ -1,0 +1,29 @@
+symbol: BTCUSDT
+interval: 5m
+
+features_input_path: data/interim/BTCUSDT_5m_2025-01-01_2025-02-01_features.parquet
+
+labeled_output_path: data/interim/BTCUSDT_5m_2025-01-01_2025-02-01_labeled_binary.parquet
+label_config_path: reports/label_binary_config.json
+label_report_path: reports/label_binary_report.md
+
+# 60 minutes / 5-minute candles = 12 future candles.
+horizon_candles: 12
+
+# Defines the high-volatility event.
+# This is configurable and should be documented as an operational choice.
+volatility_quantile: 0.80
+
+# Temporary chronological threshold-estimation split.
+# Teaching pipeline 5 will formalize train/validation/test splitting.
+train_fraction_for_threshold: 0.70
+
+# Drop final rows that do not have enough future candles.
+drop_missing_labels: true
+
+# Used only for report/sensitivity documentation.
+sensitivity_quantiles:
+  - 0.70
+  - 0.80
+  - 0.90
+  - 0.95

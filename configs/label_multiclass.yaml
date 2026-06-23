@@ -1,0 +1,10 @@
+label:
+  name: multiclass_regime
+  classes:
+    bearish: -1
+    neutral: 0
+    bullish: 1
+  forward_return_horizon: 7
+  lower_threshold: -0.02
+  upper_threshold: 0.02
+  output_column: regime_multiclass

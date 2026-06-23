@@ -1,0 +1,27 @@
+symbol: BTCUSDT
+interval: 5m
+
+labeled_input_path: data/interim/BTCUSDT_5m_2025-01-01_2025-02-01_labeled_binary.parquet
+
+split_output_path: data/interim/BTCUSDT_5m_2025-01-01_2025-02-01_labeled_binary_splits.parquet
+split_manifest_path: reports/split_manifest.json
+split_report_path: reports/split_report.md
+
+horizon_candles: 12
+volatility_quantile: 0.80
+
+train_fraction: 0.70
+validation_fraction: 0.15
+test_fraction: 0.15
+
+# Because labels use future candles, purge rows around split boundaries.
+purge_gap_candles: 12
+
+# Recompute the final modeling label using split == train only.
+create_split_safe_label: true
+
+walk_forward:
+  enabled: true
+  min_train_fraction: 0.50
+  validation_window_fraction: 0.10
+  step_fraction: 0.10

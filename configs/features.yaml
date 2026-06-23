@@ -1,0 +1,19 @@
+symbol: BTCUSDT
+interval: 5m
+
+processed_path: data/processed/BTCUSDT_5m_2025-01-01_2025-02-01_processed.parquet
+
+features_output_path: data/interim/BTCUSDT_5m_2025-01-01_2025-02-01_features.parquet
+feature_schema_path: reports/feature_schema.json
+feature_report_path: reports/feature_engineering_report.md
+
+rolling_windows:
+  - 3
+  - 6
+  - 12
+  - 48
+  - 288
+
+min_periods_policy: full_window
+drop_missing_features: true
+run_leakage_check: true
